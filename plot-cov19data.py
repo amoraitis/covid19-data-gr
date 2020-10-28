@@ -31,17 +31,17 @@ def getAndSaveDataOff():
     dataset.pop(0)
 
     import csv
-    with open('data/dataset.csv', 'w', newline='') as csvfile:
+    with open('dataset.csv', 'w', newline='') as csvfile:
         spamwriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow(['date', 'newCases', 'newClinicTests', 'newRapidTests', 'totalNewTests', 'percentile'])
+        spamwriter.writerow(['date', 'newCases', 'newClinicTests', 'newRapidTests', 'totalNewTests', 'percentage'])
         for day in dataset:
             spamwriter.writerow(day)
 
 getAndSaveDataOff()
 
 def loadCsvDataSet():
-    return pd.read_csv('data/dataset.csv')
+    return pd.read_csv('dataset.csv')
 
 dataset = loadCsvDataSet()
 
@@ -52,8 +52,8 @@ def showScatterPlot(dataset):
     plt.figure(1, figsize=(12,7))
     color = 'tab:red'
     axYleft.set_xlabel('date')
-    axYleft.set_ylabel('percentile of infected')
-    axYleft.plot(dateSet, dataset.percentile, color=color)
+    axYleft.set_ylabel('percentage of infected')
+    axYleft.plot(dateSet, dataset.percentage, color=color)
     axYleft.tick_params(axis='y', labelcolor=color)
 
     axYright = axYleft.twinx()
@@ -63,7 +63,7 @@ def showScatterPlot(dataset):
     axYright.plot(dateSet, dataset.newCases, color=color)
     axYright.tick_params(axis='y', labelcolor=color)
     figure.tight_layout()
-    plt.title('Percantile of infected in Greece(new cases / total new tests) per day') 
+    plt.title('Percentage of infected in Greece(new cases/total new tests) per day') 
 
     plt.figure(2, figsize=(12,7))
     plt.plot(dateSet, dataset.totalNewTests, color='tab:orange')
