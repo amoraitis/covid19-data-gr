@@ -1,3 +1,6 @@
+# ferch data from the natioal public health organization of Greece
+# https://eody.gov.gr/epidimiologika-statistika-dedomena/ektheseis-covid-19/
+
 import urllib.request
 from datetime import date, timedelta
 

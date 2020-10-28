@@ -47,20 +47,31 @@ dataset = loadCsvDataSet()
 
 def showScatterPlot(dataset):
     dateSet = list(map(lambda item: datetime.strptime(str(item), '%Y%m%d'), dataset.date))
-    plt.scatter(dateSet, dataset.percentile, label= "stars", color= "green",  
-            marker= "*", s=30) 
-  
-    # x-axis label 
-    plt.xlabel('date') 
-    # frequency label 
-    plt.ylabel('percentile of infected') 
-    # plot title 
-    plt.title('Scatter plot: percantile of infected in Greece(new cases / total new tests) per day') 
-    # showing legend 
-    plt.legend() 
-    
+
+    figure, axYleft = plt.subplots()
+    plt.figure(1, figsize=(12,7))
+    color = 'tab:red'
+    axYleft.set_xlabel('date')
+    axYleft.set_ylabel('percentile of infected')
+    axYleft.plot(dateSet, dataset.percentile, color=color)
+    axYleft.tick_params(axis='y', labelcolor=color)
+
+    axYright = axYleft.twinx()
+
+    color = 'tab:blue'
+    axYright.set_ylabel('new cases')
+    axYright.plot(dateSet, dataset.newCases, color=color)
+    axYright.tick_params(axis='y', labelcolor=color)
+    figure.tight_layout()
+    plt.title('Percantile of infected in Greece(new cases / total new tests) per day') 
+
+    plt.figure(2, figsize=(12,7))
+    plt.plot(dateSet, dataset.totalNewTests, color='tab:orange')
+    plt.ylabel('total new cases')
+    plt.xlabel('date')
+    plt.title('Total new tests over time(daily)')
     # function to show the plot 
-    plt.show() 
+    plt.show()
 
 
 showScatterPlot(dataset)
